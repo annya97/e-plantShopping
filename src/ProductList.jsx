@@ -269,6 +269,13 @@ function ProductList({ onHomeClick }) {
         }));
     };
 
+    const handleRemoveFromCart = (plantName) => {
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [plantName]: false,
+        }));
+    };
+
     const calculateTotalQuantity = () => {
         return cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0;
     };
@@ -319,6 +326,7 @@ function ProductList({ onHomeClick }) {
                                         <button
                                             className="product-button"
                                             onClick={() => handleAddToCart(plant)}
+                                            disabled={addedToCart[plant.name]}
                                         >
                                             Add to Cart
                                         </button>
@@ -329,7 +337,7 @@ function ProductList({ onHomeClick }) {
                     ))}
                 </div>
             ) : (
-                <CartItem onContinueShopping={handleContinueShopping} />
+                <CartItem onContinueShopping={handleContinueShopping} onRemove={handleRemoveFromCart} />
             )}
         </div>
     );
